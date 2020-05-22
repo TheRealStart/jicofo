@@ -2335,7 +2335,8 @@ public class JitsiMeetConferenceImpl
         }
 
         // do not allow unmuting other participants even for the moderator
-        if (!doMute && !fromJid.equals(toBeMutedJid))
+        if (!doMute && (!fromJid.equals(toBeMutedJid) || ChatRoomMemberRole.MODERATOR.compareTo(
+                principal.getChatMember().getRole()) < 0))
         {
             logger.warn("Blocking an unmute request (jid not the same).");
             return false;
